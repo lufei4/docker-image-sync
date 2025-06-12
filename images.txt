@@ -1,2 +1,3 @@
 nginx:latest
 portainer/portainer:latest
+nacos-server:latest
