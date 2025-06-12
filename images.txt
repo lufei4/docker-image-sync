@@ -1,1 +1,2 @@
-sickcodes/docker-osx:sonoma
+mysql
+nginx
