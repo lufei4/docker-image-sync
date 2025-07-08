@@ -1,1 +1,1 @@
-toeverything/affine
+toeverything/affine:latest
