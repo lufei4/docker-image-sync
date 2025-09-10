@@ -1,1 +1,1 @@
-paulknulst/affine:latest
+mysql:8.4.0
