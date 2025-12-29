@@ -1,1 +1,1 @@
-umami:3.0.3
+livekit/livekit-dashboard:latest
