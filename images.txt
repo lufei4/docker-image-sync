@@ -1,1 +1,2 @@
 iiidev/iii:latest
+livekit/livekit-dashboard:latest
