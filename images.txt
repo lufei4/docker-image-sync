@@ -1,4 +1,1 @@
-iiidev/iii:latest
-livekit/livekit-dashboard:latest
-mysql:latest
 mongo:latest
