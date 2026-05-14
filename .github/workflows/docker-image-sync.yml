@@ -6,8 +6,8 @@ on:
       - 'images.txt'
 
 env:
-  CNB_REGISTRY: docker.cnb.cool
-  CNB_REPO_SLUG: lufei123/lufei-docker
+  CNB_REGISTRY: ${{ secrets.CNB_REGISTRY }}
+  CNB_REPO_SLUG: ${{ secrets.CNB_REPO_SLUG_LOWERCASE }}
 
 jobs:
   sync-images:
