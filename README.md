@@ -1,37 +1,40 @@
 # docker-image-sync
-使用 Github Action 同步Docker 镜像至腾讯云 Coding 制品库，解决国内拉取镜像失败问题
 
-随着国内各 Docker 镜像仓库被下，现在拉个镜像真是一言难尽，通过fork 本仓库将镜像同步至腾讯云 Coding 制品库，来解决拉取 Docker 镜像失败问题。
+本仓库修改自https://github.com/OnlyTL/docker-image-sync
+
+使用 Github Action 同步Docker 镜像至cnb.cool 制品库，解决国内拉取镜像失败问题
+
+随着国内各 Docker 镜像仓库被下，现在拉个镜像真是一言难尽，通过fork 本仓库将镜像同步至cnb.cool 制品库，来解决拉取 Docker 镜像失败问题。
 
 # 1. 前提条件
 
 ## Coding 准备
-- 注册腾讯云 Coding 账号 [CODING | 一站式软件研发管理平台](https://e.coding.net/login)
-- 创建项目
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031257809.png)
-
-- 创建完成后，进入项目，选择制品管理->制品仓库，创建一个制品仓库
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031304809.png)
+- 注册 CNB 账号 [CNB.tool](https://cnb.cool/)
+- 创建仓库
+![img.png](img.png)
+- 点击头像，然后点击我的仓库
+- ![img_1.png](img_1.png)
+- 创建完成后，进入我的仓库，选择刚刚创建的仓库->制品，点击使用指引
+![img_2.png](img_2.png)
+- 使用指引里面有了解更多，获取当前skill所需要的CNB参数
+- ![img_3.png](img_3.png)
 
 - Docker 制品仓库创建完成后，点击操作指引，可以看到针对此制品库的推送和拉取命令，其中有两个需要关注的地方，一个是仓库地址，一个是命名空间，后续会用到
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031308487.png)
+![img_4.png](img_4.png)
 
 # 2. Github 相关配置
 
-- 首先需要在 github fork 下面项目，觉得有用可以⭐,打开下面地址fork 到自己仓库
-[GitHub - OnlyTL/docker-image-sync: 使用 Github Action 同步Docker 镜像至腾讯云 Coding 制品库，解决国内拉取镜像失败问题](https://github.com/OnlyTL/docker-image-sync)
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031311829.png)
+- 首先需要在 github fork 下面项目,打开下面地址fork 到自己仓库
+(https://github.com/lufei4/docker-image-sync)
 
-- fork 完成后需要在自己仓库的setting中设置 4 个 变量
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031313581.png)
+- fork 完成后需要在自己仓库的setting中设置 3 个 变量
+![img_5.png](img_5.png)
 
-
-| Secret Name      | 说明                         | 来源                     |
-| ---------------- | -------------------------- | ---------------------- |
-| CODING_REGISTRY  | 腾讯云Coding 制品库仓库地址          | 制品库操作指引中查找，前文提到过       |
-| CODING_NAMESPACE | 腾讯云Coding 制品库名称（项目名/制品库名称） | 制品库操作指引中查找，前文提到过       |
-| CODING_USERNAME  | 腾讯云Coding 登录用户名            |                        |
-| CODING_PASSWORD  | 腾讯云Coding 登录密码             | 也可以在操作指引中配置访问令牌，使用令牌也行 |
+| Secret Name      | 说明                                  | 来源                     |
+| ---------------- |-------------------------------------| ---------------------- |
+| CNB_REGISTRY  | 固定值:docker.cnb.cool/               | 固定值 |
+| CNB_REPO_SLUG_LOWERCASE | CNB 目标仓库（小写）如	lufei123/lufei-docker | 制品库操作指引中查找，前文提到过       |
+| CNB_TOKEN  | CNB制品仓库 登录凭证                        |                        |
 - 配置完成后，就可以同步镜像了
 # 3. 同步及拉取
 ## 3.1 同步
@@ -54,21 +57,16 @@ redis:6.0
 ![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031324225.png)
 
 提交完成后，就可以在 Action 中看到正在同步了...
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031325264.png)
+![img_6.png](img_6.png)
 
-等待同步完成后，就可以通过 Coding 拉取使用了
+等待同步完成后，就可以通过 CNB 拉取使用了
 
 ## 3.2 拉取
 
-等待 Github Action 同步完成后，就可以在 Coding 制品库中看到了
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031327319.png)
+等待 Github Action 同步完成后，就可以在 CNB 制品库中看到了
 
-然后根据操作指引中的命令先进行登录
-```shell
-docker login -u <USERNAME> -p <PASSWORD> g-docker.pkg.coding.net
-```
 
-登录完成后，根据根据拉取命令拉取对应镜像对应版本就行了，也可以进入镜像中，右上角有操作指引，直接复制拉取命令也可以
-![image.png](https://onlytl.oss-cn-chengdu.aliyuncs.com/images/202408031331208.png)
+1.进入 CNB 制品库，点击进入仓库，然后根据操作指引中的命令先进行登录
 
-至此，可以拉取你想要的镜像了，当然，还是稍微有些许麻烦，但是好在能下下来了不是😎🚀
+2.登录完成后，根据根据拉取命令拉取对应镜像对应版本就行了，也可以进入镜像中，右上角有操作指引，直接复制拉取命令也可以
+
